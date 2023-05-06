@@ -1,0 +1,1666 @@
+{
+	"info": {
+		"_postman_id": "ae521b01-dd54-4237-a466-d486333245fd",
+		"name": "Otus - 6 homework",
+		"description": "leadactiv backend service\n\nContact Support:\n Name: API Support\n Email: kanya384@mail.ru",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25107378"
+	},
+	"item": [
+		{
+			"name": "регитсрация пользователя - 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Регистрация пользователя 1\", function () {",
+							"    var responseJSON = JSON.parse(responseBody)",
+							"    pm.collectionVariables.set(\"userId1\", responseJSON[\"id\"])",
+							"    console.log(responseJSON);",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"window = {};",
+							"",
+							"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {",
+							"    if (error || response.code !== 200) {",
+							"        pm.expect.fail('Could not load external library');",
+							"    }",
+							"",
+							"    eval(response.text());",
+							"",
+							"    // This is where you can set the locale. See faker.js docs for all available locales.",
+							"    window.faker.locale=\"fr\";",
+							"    pm.collectionVariables.set(\"login\", window.faker.internet.userName());",
+							"    pm.collectionVariables.set(\"password\", window.faker.internet.password());",
+							"    pm.collectionVariables.set(\"name\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"middleName\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"surname\", window.faker.name.lastName());",
+							"    pm.collectionVariables.set(\"phone\",window.faker.phone.phoneNumber());",
+							"    pm.collectionVariables.set(\"city\",window.faker.address.city());",
+							"",
+							"    console.log(pm.collectionVariables)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"name\": \"{{name}}\",\n  \"middleName\": \"{{middleName}}\",\n  \"surname\": \"{{surname}}\",\n  \"phone\": \"{{phone}}\",\n  \"city\": \"{{city}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/sign-up",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				},
+				"description": "создание пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "проверка что получение пользователя не доступно без логина",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Проверка, что получение профиля пользователя 1 недоступно без логина\", function() {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{userId1}}",
+							"description": "(Required) User id"
+						}
+					]
+				},
+				"description": "получение профиля пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "авторизация пользователя - 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"авторизация пользователя - 1\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"pass\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/sign-in",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				},
+				"description": "авторизация пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"session_id\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "обновление профиля пользователя - 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"window = {};",
+							"",
+							"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {",
+							"    if (error || response.code !== 200) {",
+							"        pm.expect.fail('Could not load external library');",
+							"    }",
+							"",
+							"    eval(response.text());",
+							"",
+							"    // This is where you can set the locale. See faker.js docs for all available locales.",
+							"    window.faker.locale=\"fr\";",
+							"    pm.collectionVariables.set(\"name\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"middleName\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"surname\", window.faker.name.lastName());",
+							"    pm.collectionVariables.set(\"phone\",window.faker.phone.phoneNumber());",
+							"    pm.collectionVariables.set(\"city\",window.faker.address.city());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Проверка, что изменение профиля 1 пользователя прошло успешно\", function () {",
+							"    console.log(pm.request.body.raw);",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"name\": \"{{name}}\",\n  \"middleName\": \"{{middleName}}\",\n  \"surname\": \"{{surname}}\",\n  \"phone\": \"{{phone}}\",\n  \"city\": \"{{city}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{userId1}}",
+							"description": "(Required) User id"
+						}
+					]
+				},
+				"description": "обновление профиля пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "получение профиля пользователя - 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Проверка, что профиль пользователя 1 поменялся\", function () {",
+							"    console.log(pm.response.json());",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.name).to.eql(pm.collectionVariables.get(\"name\"));",
+							"    pm.expect(responseJson.surname).to.eql(pm.collectionVariables.get(\"surname\"));",
+							"    pm.expect(responseJson.phone).to.eql(pm.collectionVariables.get(\"phone\"));",
+							"    pm.expect(responseJson.city).to.eql(pm.collectionVariables.get(\"city\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{userId1}}",
+							"description": "(Required) User id"
+						}
+					]
+				},
+				"description": "получение профиля пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "logout пользователя - 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Проверка, что логаут пользователя 1 прошел успешно\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/auth/sign-out",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-out"
+					]
+				},
+				"description": "получение профиля пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "регитсрация пользователя - 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Регистрация пользователя 2\", function () {",
+							"    var responseJSON = JSON.parse(responseBody)",
+							"    pm.collectionVariables.set(\"userId2\", responseJSON[\"id\"])",
+							"    console.log(responseJSON);",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"window = {};",
+							"",
+							"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {",
+							"    if (error || response.code !== 200) {",
+							"        pm.expect.fail('Could not load external library');",
+							"    }",
+							"",
+							"    eval(response.text());",
+							"",
+							"    // This is where you can set the locale. See faker.js docs for all available locales.",
+							"    window.faker.locale=\"fr\";",
+							"    pm.collectionVariables.set(\"login\", window.faker.internet.userName());",
+							"    pm.collectionVariables.set(\"password\", window.faker.internet.password());",
+							"    pm.collectionVariables.set(\"name\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"middleName\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"surname\", window.faker.name.lastName());",
+							"    pm.collectionVariables.set(\"phone\",window.faker.phone.phoneNumber());",
+							"    pm.collectionVariables.set(\"city\",window.faker.address.city());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"name\": \"{{name}}\",\n  \"middleName\": \"{{middleName}}\",\n  \"surname\": \"{{surname}}\",\n  \"phone\": \"{{phone}}\",\n  \"city\": \"{{city}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/sign-up",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				},
+				"description": "создание пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Маями\",\n  \"login\": \"admin\",\n  \"middleName\": \"Иванович\",\n  \"name\": \"Иван\",\n  \"password\": \"Qwerty123\",\n  \"phone\": \"79000000000\",\n  \"surname\": \"Иванов\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-up/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-up",
+								""
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "авторизация пользователя - 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"авторизация пользователя - 2\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"pass\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/sign-in",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				},
+				"description": "авторизация пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"session_id\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": \"<string>\",\n  \"pass\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sign-in"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "обновление профиля пользователя - 1 под пользователем -2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"window = {};",
+							"",
+							"pm.sendRequest(\"https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js\", (error, response) => {",
+							"    if (error || response.code !== 200) {",
+							"        pm.expect.fail('Could not load external library');",
+							"    }",
+							"",
+							"    eval(response.text());",
+							"",
+							"    // This is where you can set the locale. See faker.js docs for all available locales.",
+							"    window.faker.locale=\"fr\";",
+							"    pm.collectionVariables.set(\"name\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"middleName\", window.faker.name.firstName());",
+							"    pm.collectionVariables.set(\"surname\", window.faker.name.lastName());",
+							"    pm.collectionVariables.set(\"phone\",window.faker.phone.phoneNumber());",
+							"    pm.collectionVariables.set(\"city\",window.faker.address.city());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"проверка, что пользователь2 не имеет доступа на чтение и редактирование профиля пользователя1\", function() {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"name\": \"{{name}}\",\n  \"middleName\": \"{{middleName}}\",\n  \"surname\": \"{{surname}}\",\n  \"phone\": \"{{phone}}\",\n  \"city\": \"{{city}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{userId1}}",
+							"description": "(Required) User id"
+						}
+					]
+				},
+				"description": "обновление профиля пользователя."
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"city\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"id\": \"<string>\",\n  \"login\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"modified_at\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"role\": \"<string>\",\n  \"surname\": \"<string>\"\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				},
+				{
+					"name": "Internal Server Error",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"city\": \"Лондон\",\n  \"login\": \"admin.upd\",\n  \"middleName\": \"Иванович.upd\",\n  \"name\": \"Иван.upd\",\n  \"password\": \"Qwerty123.upd\",\n  \"phone\": \"79111111111\",\n  \"surname\": \"Иванов.upd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "<string>",
+									"description": "(Required) User id"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"<string>\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://arch.homework",
+			"type": "string"
+		},
+		{
+			"key": "userId1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "login",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "middleName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "surname",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "phone",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "city",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

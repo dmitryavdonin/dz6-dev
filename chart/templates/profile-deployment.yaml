@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-app
+spec:
+  replicas: {{ .Values.profile.replicaCount}}
+  selector:
+    matchLabels:
+      app: profile-app
+  template:
+    metadata:
+      labels:
+        app: profile-app
+    spec:
+      containers:
+      - name: profile-app
+        image: {{ .Values.profile.container.image}}
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http
+            containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: profile-app-config
+          - secretRef:
+              name: profile-postgres-secret

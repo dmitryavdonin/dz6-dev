@@ -1,0 +1,6 @@
+.env
+deployments/.data
+cert
+.well-known
+.tgz
+.exe

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-app
+  labels:
+    app: profile-app
+spec:
+  selector:
+    app: profile-app
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

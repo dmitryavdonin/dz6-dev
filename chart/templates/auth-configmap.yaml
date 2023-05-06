@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-app-config
+data:
+  APP_PORT: "8080"
+  APP_SERVICE_NAME: "auth"
+  LOG_LEVEL: "debug"
+  TOKEN_TTL: "5m"
+  SESSION_TTL: "60m"
+  USERS_SERVICE_URI: "http://profile-app.default.svc.cluster.local"
+  

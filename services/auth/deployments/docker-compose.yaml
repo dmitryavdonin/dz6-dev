@@ -1,0 +1,17 @@
+version: '3.3'
+networks:
+  app-net:
+    driver: bridge
+services:
+  redis:
+    container_name: redis
+    image: redis
+    command:
+      - 'redis-server'
+      - '--loglevel ${REDIS_LOGLEVEL:-warning}'
+      - '--databases 2'
+      - '--maxmemory ${REDIS_MAXMEM:-50mb}'
+      - '--maxmemory-policy ${REDIS_POLICY:-noeviction}'
+      - '--requirepass ${REDIS_PASS}'
+    ports:
+      - "6379:6379"

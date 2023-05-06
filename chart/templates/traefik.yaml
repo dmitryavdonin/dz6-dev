@@ -1,0 +1,70 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-auth-prefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /auth
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: default-routes
+spec:
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/auth/sign-up`) # Запросы /auth/sign-up отправляем в сервис профилей напрямую
+      services:
+        - name: profile-app
+          namespace: default
+          port: 80
+      middlewares:
+        - name: strip-auth-prefix # Убираем префикс из пути, чтобы запросы шли на корень сервиса
+          namespace: default
+    - kind: Rule
+      match: PathPrefix(`/auth`) # Запросы с префиксом /auth отправляем в auth-app
+      services:
+        - name: auth-app
+          namespace: default
+          port: 80
+      middlewares:
+        - name: strip-auth-prefix # Убираем префикс из пути, чтобы запросы шли на корень сервиса
+          namespace: default
+    - kind: Rule
+      match: PathPrefix(`/`) # Остальные запросы отправляем в profile-app
+      priority: 1 # Traefik сам сортирует роуты по длине и приоритету, так что нм не обязательно сортировать их, как в Istio
+      services:
+        - name: profile-app
+          namespace: default
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth
+spec:
+  forwardAuth:
+    address: http://auth-app.default.svc.cluster.local/session/cookie
+    authResponseHeaders:
+      - x-username
+      - x-auth-token
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: auth-routes
+spec:
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/`)
+      priority: 10 # Добавляем маршрут с большим приоритетом, чтобы эти натсройки применились поверх предыдущих
+      services:
+        - name: profile-app
+          namespace: default
+          port: 80
+      middlewares:
+        - name: auth # Включаем forward-auth
+          namespace: default
