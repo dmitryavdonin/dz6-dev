@@ -1,7 +1,7 @@
 auth:
   replicaCount: "1"
   container:
-    image: dmitryavdonin/auth:1.0.0
+    image: dmitryavdonin/auth:3.0.0
 profile:
   replicaCount: "1"
   container:
@@ -49,16 +49,3 @@ redis:
     password: "password"
   replica:
     replicaCount: 1
-
-traefik:
-  providers:
-    kubernetesIngress:
-      enabled: false # Настраиваем маршруты только с помощью CRD (IngressRoute)
-  ports:
-    websecure:
-      expose: false # Выключаем https
-  logs:
-    access:
-      enabled: true
-    general:
-      level: DEBUG

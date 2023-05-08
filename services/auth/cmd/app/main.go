@@ -15,6 +15,8 @@ import (
 	lg "github.com/dmitryavdonin/gtools/logger"
 )
 
+var Version = "3.0.1"
+
 func main() {
 	cfg, err := config.InitConfig("")
 	if err != nil {
@@ -49,6 +51,8 @@ func main() {
 	if err != nil {
 		logger.Fatal("delivery initialization error: %s", err.Error())
 	}
+
+	logger.Info("main(): Auth app version = " + Version)
 
 	err = delivery.Run()
 	if err != nil {

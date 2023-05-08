@@ -20,7 +20,7 @@ func (d *Delivery) initRouter() *gin.Engine {
 	router.POST("/sign-in", d.SignIn)
 	router.GET("/sign-out", d.SignOut)
 	router.GET("/session/:id", d.ReadSessionById)
-	router.GET("/session/cookie", d.ReadSessionByCookie)
+	router.GET("/session/cookie/*url", d.ReadSessionByCookie)
 
 	return router
 }

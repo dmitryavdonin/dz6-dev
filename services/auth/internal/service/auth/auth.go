@@ -45,6 +45,10 @@ func (a *auth) SignIn(ctx context.Context, login, pass string) (sessionId uuid.U
 	if err != nil {
 		return
 	}
+
+	a.logger.Debug("auth: SignIn(): SUCCESS! login = " + login + "; pass = " + pass + "; session = " + sessionId.String())
+	a.logger.Debug("auth: SignIn(): token = " + token)
+
 	return session.Id(), nil
 }
 

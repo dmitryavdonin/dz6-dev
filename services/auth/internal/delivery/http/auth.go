@@ -21,6 +21,7 @@ func (d *Delivery) SignIn(c *gin.Context) {
 	sessionId, err := d.services.Auth.SignIn(context.Background(), request.Login, request.Pass)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		d.logger.Debug("http/auth: SignIn(): FAILED! login = " + request.Login + "; pass = " + request.Pass + "; err = " + err.Error())
 		return
 	}
 
