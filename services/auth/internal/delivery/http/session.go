@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	jsonSession "auth/internal/delivery/http/session"
@@ -19,6 +20,7 @@ func (d *Delivery) ReadSessionById(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionById(): FAILED! Cannot parse id = " + strId + " as UUID")
+		fmt.Println("Session: ReadSessionById(): FAILED! Cannot parse id = " + strId + " as UUID")
 		return
 	}
 
@@ -26,10 +28,12 @@ func (d *Delivery) ReadSessionById(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionById(): FAILED! " + err.Error())
+		fmt.Println("Session: ReadSessionById(): FAILED! " + err.Error())
 		return
 	}
 
 	d.logger.Debug("Session: ReadSessionById(): SUCCESS! session = " + session.Id().String())
+	fmt.Println("Session: ReadSessionById(): SUCCESS! session = " + session.Id().String())
 
 	c.JSON(http.StatusOK, d.toResponseSession(session))
 }
@@ -39,15 +43,18 @@ func (d *Delivery) ReadSessionByCookie(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionByCookie(): FAILED! " + err.Error())
+		fmt.Println("Session: ReadSessionByCookie(): FAILED! " + err.Error())
 		return
 	}
 
 	d.logger.Debug("Session: ReadSessionByCookie(): sessionCookieString = " + sessionCookieString.Value)
+	fmt.Println("Session: ReadSessionByCookie(): sessionCookieString = " + sessionCookieString.Value)
 
 	id, err := uuid.Parse(sessionCookieString.Value)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionByCookie(): FAILED! " + err.Error())
+		fmt.Println("Session: ReadSessionByCookie(): FAILED! " + err.Error())
 		return
 	}
 
@@ -55,11 +62,15 @@ func (d *Delivery) ReadSessionByCookie(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionByCookie(): FAILED! " + err.Error())
+		fmt.Println("Session: ReadSessionByCookie(): FAILED! " + err.Error())
 		return
 	}
 
 	d.logger.Debug("Session: ReadSessionByCookie(): SUCCESS! login = " + session.Login())
 	d.logger.Debug("Session: ReadSessionByCookie(): SUCCESS! token = " + session.Token())
+
+	fmt.Println("Session: ReadSessionByCookie(): SUCCESS! login = " + session.Login())
+	fmt.Println("Session: ReadSessionByCookie(): SUCCESS! token = " + session.Token())
 
 	c.Header("x-username", session.Login())
 	c.Header("x-auth-token", session.Token())

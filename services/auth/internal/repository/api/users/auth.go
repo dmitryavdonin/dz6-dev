@@ -9,19 +9,34 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
+
+	"github.com/google/uuid"
 )
 
 func (r *Repository) ReadUserByCredetinals(ctx context.Context, params *repository.ReadUserByCredetinalsParams) (user *repository.User, err error) {
-	request := &dto.ReadUserByCredetinalsRequest{
-		Login: params.Login,
-		Pass:  params.Pass,
-	}
+	// request := &dto.ReadUserByCredetinalsRequest{
+	// 	Login: params.Login,
+	// 	Pass:  params.Pass,
+	// }
 
-	response := &dto.ReadUserByCredetinalsResponse{}
-	_, err = sendRequest(r.baseUrl+"/user/creds", http.MethodPost, "application/json", request, response)
-	if err != nil {
-		return
+	var id, _ = uuid.Parse("8d6f93fa-b198-413c-a40d-7fc462083e52")
+
+	response := &dto.ReadUserByCredetinalsResponse{
+		Id:         id,
+		Login:      "Léa.Fernandez",
+		Name:       "Lea",
+		MiddleName: "N",
+		Surname:    "Fernandez",
+		Phone:      "123456789",
+		City:       "X",
+		CreatedAt:  time.Now(),
+		ModifiedAt: time.Now(),
 	}
+	// _, err = sendRequest(r.baseUrl+"/user/creds", http.MethodPost, "application/json", request, response)
+	// if err != nil {
+	// 	return
+	// }
 
 	return &repository.User{
 		Id:         response.Id,

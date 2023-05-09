@@ -40,6 +40,7 @@ type Manager struct {
 	ttl           time.Duration
 	privateKey    *rsa.PrivateKey
 	publickKey    *rsa.PublicKey
+	keyID         string
 }
 
 func NewManager(ttl time.Duration) (*Manager, error) {
@@ -97,6 +98,7 @@ func (m *Manager) generateRsaKey() (err error) {
 	}
 	m.privateKey = privatekey
 	m.publickKey = &privatekey.PublicKey
+
 	err = m.saveJWKs()
 	return
 }
@@ -119,6 +121,8 @@ func (m *Manager) saveJWKs() (err error) {
 	if err != nil {
 		return
 	}
+
+	m.keyID = set.KeyID()
 
 	res, err := set.AsMap(context.Background())
 	if err != nil {
@@ -158,6 +162,7 @@ func (m *Manager) NewJWT(input AuthInfo) (string, error) {
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	})
+	token.Header["kid"] = m.keyID
 
 	return token.SignedString(m.privateKey)
 }

@@ -15,7 +15,7 @@ import (
 	lg "github.com/dmitryavdonin/gtools/logger"
 )
 
-var Version = "3.0.1"
+var Version = "3.0.2"
 
 func main() {
 	cfg, err := config.InitConfig("")
@@ -27,6 +27,10 @@ func main() {
 	logger, err := lg.New(cfg.Log.Level, cfg.App.ServiceName)
 	if err != nil {
 		panic(fmt.Sprintf("error initializing logger %s", err))
+	}
+
+	if cfg.Redis.Pass == " " {
+		cfg.Redis.Pass = ""
 	}
 
 	//redis init
@@ -52,7 +56,8 @@ func main() {
 		logger.Fatal("delivery initialization error: %s", err.Error())
 	}
 
-	logger.Info("main(): Auth app version = " + Version)
+	//logger.Info("main(): Auth app version = " + Version)
+	fmt.Println("main(): Auth app version = " + Version)
 
 	err = delivery.Run()
 	if err != nil {

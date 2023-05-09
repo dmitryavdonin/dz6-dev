@@ -5,6 +5,7 @@ import (
 	repo "auth/internal/service/auth/adapters/repository"
 	"auth/pkg/tools/tokenManager"
 	"context"
+	"fmt"
 
 	"github.com/dmitryavdonin/gtools/logger"
 	"github.com/google/uuid"
@@ -48,6 +49,9 @@ func (a *auth) SignIn(ctx context.Context, login, pass string) (sessionId uuid.U
 
 	a.logger.Debug("auth: SignIn(): SUCCESS! login = " + login + "; pass = " + pass + "; session = " + sessionId.String())
 	a.logger.Debug("auth: SignIn(): token = " + token)
+
+	fmt.Println("auth: SignIn(): SUCCESS! login = " + login + "; pass = " + pass + "; session = " + sessionId.String())
+	fmt.Println("auth: SignIn(): token = " + token)
 
 	return session.Id(), nil
 }
