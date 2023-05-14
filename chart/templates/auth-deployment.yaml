@@ -15,7 +15,7 @@ spec:
       containers:
       - name: auth-app
         image: {{ .Values.auth.container.image}}
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - name: http
             containerPort: 8080

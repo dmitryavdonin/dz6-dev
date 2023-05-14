@@ -1,3 +1,5 @@
 aiohttp
 aiohttp-jinja2
 Authlib
+requests
+environ

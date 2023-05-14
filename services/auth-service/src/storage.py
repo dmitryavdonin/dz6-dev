@@ -25,7 +25,7 @@ class Storage:
 
         return self.states.pop(key)
 
-    def create_session(self, *, username):
+    def create_session(self, *, username, user_id):
         key = str(uuid.uuid4())
         groups = ['users']
         scope = 'user'
@@ -40,8 +40,9 @@ class Storage:
         }
         jwt_data = {
             "groups": groups,
-            "username": username,
-            "iss": "http://auth-service",
+            "login": username,
+            "user_id": user_id,
+            "iss": "http://auth-app",
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=365),
             "sub": key,
             "scope": scope  # Ambassador умеет работать со стандартными полями токена

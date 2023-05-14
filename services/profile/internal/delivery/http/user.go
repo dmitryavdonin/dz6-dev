@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	jsonRequests "profile/internal/delivery/http/user"
 	"profile/internal/domain/user"
@@ -11,7 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
-
 
 func (d *Delivery) CreateUser(c *gin.Context) {
 	token := c.GetHeader("x-auth-token")
@@ -41,7 +41,6 @@ func (d *Delivery) CreateUser(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, d.toResponseUser(user))
 }
-
 
 func (d *Delivery) UpdateUser(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
@@ -85,7 +84,6 @@ func (d *Delivery) UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, d.toResponseUser(user))
 }
 
-
 func (d *Delivery) DeleteUserById(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
 	if err != nil {
@@ -112,7 +110,6 @@ func (d *Delivery) DeleteUserById(c *gin.Context) {
 
 	c.Status(http.StatusOK)
 }
-
 
 func (d *Delivery) ReadUserById(c *gin.Context) {
 
@@ -142,7 +139,6 @@ func (d *Delivery) ReadUserById(c *gin.Context) {
 	c.JSON(http.StatusOK, d.toResponseUser(user))
 }
 
-
 func (d *Delivery) ReadUserByCredetinals(c *gin.Context) {
 	token := c.GetHeader("x-auth-token")
 	if token != "" {
@@ -168,6 +164,7 @@ func (d *Delivery) ReadUserByCredetinals(c *gin.Context) {
 func checkPermissions(c *gin.Context, userId uuid.UUID) (permitted bool, err error) {
 	id, ok := c.Get("userId")
 	if !ok || id == "" {
+		fmt.Println("checkPermissions(): FAILED! userId not found")
 		return
 	}
 
