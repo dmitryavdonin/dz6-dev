@@ -3,7 +3,7 @@ module profile
 go 1.20
 
 require (
-	github.com/dmitryavdonin/gtools v0.0.0-20230501141917-2ca068c8bd86
+	github.com/dmitryavdonin/gtools v0.0.0-20230508202840-fc1bc9585701
 	github.com/gin-gonic/gin v1.9.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/uuid v1.3.0
@@ -12,6 +12,8 @@ require (
 	github.com/vrischmann/envconfig v1.3.0
 	golang.org/x/crypto v0.8.0
 )
+
+require github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816 // indirect
 
 require (
 	github.com/Masterminds/squirrel v1.5.4 // indirect

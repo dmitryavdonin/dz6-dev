@@ -1,7 +1,7 @@
 auth:
   replicaCount: "1"
   container:
-    image: dmitryavdonin/auth:3.0.2
+    image: dmitryavdonin/auth-service:latest
 profile:
   replicaCount: "1"
   container:

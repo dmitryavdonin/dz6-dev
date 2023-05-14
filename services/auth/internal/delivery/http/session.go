@@ -15,7 +15,9 @@ import (
 func (d *Delivery) ReadSessionById(c *gin.Context) {
 
 	var strId = c.Param("id")
-	d.logger.Debug("Session: ReadSessionById(): id = " + strId)
+	//d.logger.Debug("Session: ReadSessionById(): id = " + strId)
+	fmt.Println("Session: ReadSessionById(): id = " + strId)
+
 	id, err := uuid.Parse(strId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -39,15 +41,16 @@ func (d *Delivery) ReadSessionById(c *gin.Context) {
 }
 
 func (d *Delivery) ReadSessionByCookie(c *gin.Context) {
+
 	sessionCookieString, err := c.Request.Cookie("session_id")
 	if err != nil {
+		fmt.Println("Session: ReadSessionByCookie(): FAILED! " + err.Error())
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		d.logger.Error("Session: ReadSessionByCookie(): FAILED! " + err.Error())
-		fmt.Println("Session: ReadSessionByCookie(): FAILED! " + err.Error())
 		return
 	}
 
-	d.logger.Debug("Session: ReadSessionByCookie(): sessionCookieString = " + sessionCookieString.Value)
+	//d.logger.Debug("Session: ReadSessionByCookie(): sessionCookieString = " + sessionCookieString.Value)
 	fmt.Println("Session: ReadSessionByCookie(): sessionCookieString = " + sessionCookieString.Value)
 
 	id, err := uuid.Parse(sessionCookieString.Value)

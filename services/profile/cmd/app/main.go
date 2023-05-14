@@ -64,7 +64,7 @@ func main() {
 
 	tm, err := tokenManager.NewOnlyParserManager(cfg.Token.PublicKeyUri)
 	if err != nil {
-		logger.Fatal("token manager initialization error: %s", err.Error())
+		//logger.Fatal("token manager initialization error: %s", err.Error())
 	}
 
 	delivery, err := delivery.New(services, tm, cfg.App.Port, logger, delivery.Options{})

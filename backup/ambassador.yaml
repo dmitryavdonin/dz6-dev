@@ -63,7 +63,7 @@ metadata:
 spec:
   External:
     auth_service: "auth-app.default"
-    path_prefix: "/auth/ambassador"
+    path_prefix: "/ambassador"
     allowed_authorization_headers:
       - "x-username"
       - "x-auth-token"

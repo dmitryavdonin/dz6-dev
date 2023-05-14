@@ -47,7 +47,7 @@ metadata:
   name: auth
 spec:
   forwardAuth:
-    address: http://auth-app.default.svc.cluster.local/session/cookie
+    address: http://auth-app.default.svc.cluster.local/cookie
     authResponseHeaders:
       - x-username
       - x-auth-token

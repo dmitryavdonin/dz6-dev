@@ -7,7 +7,7 @@ up: ## testing infra
 .PHONY: up
 
 commit: ## build and push container to docker hub| provide tag=(...)
-	@docker build -t dmitryavdonin/auth:3.0.2 . && docker push dmitryavdonin/auth:3.0.2
+	@docker build -t dmitryavdonin/auth:3.0.11 . && docker push dmitryavdonin/auth:3.0.11
 .PHONY: commit
 
 migrations-up:
