@@ -10,4 +10,5 @@ def get_headers(_, session):
 async def on_auth_fail(req: web.Request, rest_url: str):
     storage = req.app.storage
     key = storage.create_state(rest_url)
-    raise web.HTTPFound(f'{req.scheme}://{req.host}/auth/sign-in?state={key}')
+    #raise web.HTTPFound(f'{req.scheme}://{req.host}/auth/sign-in?state={key}')
+    raise web.HTTPUnauthorized()
