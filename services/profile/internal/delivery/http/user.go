@@ -154,7 +154,7 @@ func (d *Delivery) ReadUserByCredetinals(c *gin.Context) {
 
 	user, err := d.services.User.ReadUserByCredetinals(context.Background(), request.Login, request.Pass)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 

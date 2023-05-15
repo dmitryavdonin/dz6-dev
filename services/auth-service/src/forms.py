@@ -37,7 +37,8 @@ async def login(req: web.Request):
             credentials = {'login': login, 'pass': pwd}
             baseUrl = req.app.config.getUserServiceUri()                
             resp = requests.post(baseUrl + "/user/creds", json=credentials)    
-            if resp:
+            
+            if resp and resp.status_code == 200:
                 ui = UserInfo(**resp.json())
                 if ui:
                     session_id = storage.create_session(username=login, user_id=ui.id)
@@ -45,9 +46,12 @@ async def login(req: web.Request):
                     response = web.Response(status=200, text= json.dumps(jsonSessionId))
                     response.set_cookie('session_id', session_id)
                 else:
-                    response = web.HTTPNotFound(text="User " + login + " not found")    
+                    response = web.HTTPInternalServerError("Cannot parse user profile from data received")    
             else:
-                response = web.HTTPInternalServerError(text='No response from profile service')
+                if resp.status_code == 404:
+                    response = web.HTTPNotFound(text="User " + login + " not found")
+                else:
+                    response = web.Response(status=resp.status_code, text=resp.text)
         else:
-            response = web.Response(status=400, text='No username or password specified')                    
+            response = web.HTTPBadRequest(text='No username or password specified')                    
     return response
